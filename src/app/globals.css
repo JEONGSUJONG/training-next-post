@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #f5f4f1;
+  margin-top: 2rem;
+  max-width: 800px;
+  @apply mx-auto;
+}
