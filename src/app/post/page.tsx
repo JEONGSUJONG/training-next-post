@@ -1,10 +1,11 @@
-import React from "react";
-import PostList from "./components/PostList";
+import PostList from "../components/PostList";
+import { getAllPosts } from "../service/post.service";
 
-export default function page() {
+export default async function PostPage() {
+    const posts = await getAllPosts();
   return (
-    <div>
-      <PostList />
-    </div>
+    <>
+          <PostList posts={posts} />
+    </>
   );
 }

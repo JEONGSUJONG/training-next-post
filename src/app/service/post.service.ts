@@ -1,6 +1,5 @@
 "use server";
 import prisma from "@/prisma/prisma";
-import { revalidatePath } from "next/cache";
 
 // 모든 게시판 읽기
 export async function getAllPosts() {
@@ -10,28 +9,23 @@ export async function getAllPosts() {
   return postList;
 }
 
-type Post = {
-  id: number | null; // Make id nullable
-  title: string;
-  content: string;
-};
-
-// 특정 게시판 읽기
-export async function getPostById(postId: number): Promise<Post | null> {
+// 특정 게시물 가져오기
+export async function getPostById(postId: number) {
   try {
     const post = await prisma.post.findUnique({
       where: {
         id: postId,
       },
       select: {
-        id: true, // Include id in the response
+        id: true,
         title: true,
         content: true,
+        createdAt: true,
       },
     });
     return post;
   } catch (error) {
-    console.error("Failed to fetch post:", error);
+    console.error("게시물을 가져오는 데 실패했습니다:", error);
     return null;
   }
 }
@@ -50,29 +44,41 @@ export async function createPost(formData: FormData) {
   if (!newPost) {
     return null;
   }
-  revalidatePath("/post");
   return newPost;
 }
 
 // 게시판 삭제
 export async function deletePost(postId: number) {
   try {
-    const post = await prisma.post.delete({
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+      include: {
+        reply: true,
+      },
+    });
+    if (!post) {
+      return null;
+    }
+    await prisma.reply.deleteMany({
+      where: {
+        postId,
+      },
+    });
+    await prisma.post.delete({
       where: {
         id: postId,
       },
     });
-
-    if (!post) {
-      return null;
-    }
-
-    revalidatePath("/");
     return true;
   } catch (error) {
+    console.error("Error deleting post:", error);
     return false;
   }
 }
+
+
 
 // 게시판 수정
 export async function updatePost(
@@ -90,8 +96,6 @@ export async function updatePost(
     if (!result) {
       return null;
     }
-
-    revalidatePath("/");
     return true;
   } catch (error) {
     return false;
