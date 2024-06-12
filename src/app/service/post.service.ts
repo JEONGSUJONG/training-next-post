@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/prisma/prisma";
+import { revalidatePath } from "next/cache";
 
 // 모든 게시판 읽기
 export async function getAllPosts() {
@@ -44,6 +45,7 @@ export async function createPost(formData: FormData) {
   if (!newPost) {
     return null;
   }
+  revalidatePath("/post");
   return newPost;
 }
 

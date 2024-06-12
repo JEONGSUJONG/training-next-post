@@ -8,7 +8,7 @@ export async function getReplysByPostId(postId: string): Promise<any[]> {
         postId: parseInt(postId),
       },
       orderBy: {
-        createdAt: "asc", // 작성된 날짜를 기준으로 내림차순으로 정렬
+        createdAt: "asc",
       },
     });
 
@@ -19,12 +19,8 @@ export async function getReplysByPostId(postId: string): Promise<any[]> {
   }
 }
 
-export async function createReply(
-  postId: string,
-  replyContent: string
-): Promise<any> {
+export async function createReply(postId: string, replyContent: string) {
   try {
-    // postId를 이용하여 해당 게시물을 조회합니다.
     const post = await prisma.post.findUnique({
       where: {
         id: parseInt(postId),
@@ -43,7 +39,6 @@ export async function createReply(
         createdAt: new Date(),
       },
     });
-
     return newReply;
   } catch (error) {
     console.error("댓글을 생성하는 중 에러가 발생했습니다:", error);

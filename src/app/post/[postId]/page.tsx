@@ -1,4 +1,5 @@
 import PostDetail from "@/app/components/PostDetail";
+import ReplyList from "@/app/components/ReplyList";
 import { getPostById } from "@/app/service/post.service";
 
 export default async function DetailPosts({
@@ -11,6 +12,7 @@ export default async function DetailPosts({
   return (
     <>
       <PostDetail detailPost={detailPost} />
+      <ReplyList postId={postId} />
     </>
   );
 }
