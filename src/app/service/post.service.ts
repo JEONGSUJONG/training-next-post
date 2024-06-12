@@ -78,8 +78,6 @@ export async function deletePost(postId: number) {
   }
 }
 
-
-
 // 게시판 수정
 export async function updatePost(
   postId: number,

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { deletePost } from "../service/post.service";
 
@@ -14,20 +14,19 @@ type PostDetailProps = {
 };
 
 export default function PostDetail({ detailPost }: PostDetailProps) {
+  if (!detailPost) {
+    return <div>포스트를 찾을 수 없습니다.</div>;
+  }
+  const deleteBtn = async (id: number) => {
+    const result = await deletePost(id);
 
-    if (!detailPost) {
-        return <div>포스트를 찾을 수 없습니다.</div>;
+    if (!result) {
+      alert("삭제에 실패했습니다.");
+      return false;
     }
-const deleteBtn = async (id: number) => {
-  const result = await deletePost(id);
-
-  if (!result) {
-    alert("삭제에 실패했습니다.");
-    return false;
-    }
-    window.location.href = "/post"; 
-  return true;
-};
+    window.location.href = "/post";
+    return true;
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -35,7 +34,7 @@ const deleteBtn = async (id: number) => {
       <p className="text-lg text-gray-700 mb-2">{detailPost.content}</p>
       <p className="text-sm text-gray-500">
         작성일: {new Date(detailPost.createdAt).toLocaleDateString()}
-        </p>
+      </p>
       <button
         onClick={() => {
           deleteBtn(detailPost.id);

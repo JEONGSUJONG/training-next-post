@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 
 type Post = {
@@ -9,8 +9,8 @@ type Post = {
 };
 
 type PostProps = {
-    posts: Post[] | undefined
-}
+  posts: Post[] | undefined;
+};
 
 export default function PostList({ posts }: PostProps) {
   return (
