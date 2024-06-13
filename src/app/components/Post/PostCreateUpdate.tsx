@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   createPost,
   updatePost,
@@ -12,6 +13,7 @@ type PostCreateUpdateProps = {
 };
 
 export default function PostCreateUpdate({ params }: PostCreateUpdateProps) {
+  const router = useRouter();
   const isPostId = params ? parseInt(params.postId) : false;
   const [postData, setPostData] = useState({ title: "", content: "" });
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -52,7 +54,7 @@ export default function PostCreateUpdate({ params }: PostCreateUpdateProps) {
         return;
       } else {
         formRef.current?.reset();
-        window.location.href = "/post";
+        router.replace("/post");
       }
     } else {
       // updatePost
@@ -62,7 +64,7 @@ export default function PostCreateUpdate({ params }: PostCreateUpdateProps) {
         return;
       } else {
         formRef.current?.reset();
-        window.location.href = "/post/" + isPostId;
+        router.replace("/post/" + isPostId);
       }
     }
   };
@@ -85,7 +87,7 @@ export default function PostCreateUpdate({ params }: PostCreateUpdateProps) {
         <label className="block text-xl font-bold mb-2">내용</label>
         <textarea
           name="content"
-          className="block text-sm mb-2 w-full p-4 rounded-md border border-gray-300 h-[200px] resize-none"
+          className="block text-sm mb-2 w-full p-4 rounded-md border border-gray-300 h-[200px] resize-none bg-none"
           placeholder="내용을 입력하세요."
           defaultValue={postData.content}
         />
@@ -94,7 +96,7 @@ export default function PostCreateUpdate({ params }: PostCreateUpdateProps) {
             type="submit"
             className="border bg-black text-white p-2 rounded-md"
           >
-            작성
+            {isPostId ? "수정" : "작성"}
           </button>
         </div>
       </form>

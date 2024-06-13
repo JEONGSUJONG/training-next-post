@@ -39,9 +39,13 @@ export default function PostDetail({ detailPost }: PostDetailProps) {
       <p className="text-sm text-gray-500">
         작성일: {new Date(detailPost.createdAt).toLocaleDateString()}
       </p>
-      <div className="border-t border-b h-[200px] border-black my-2 py-2 text-md text-gray-700">
+      <textarea
+        readOnly
+        className="h-[200px] my-2 p-2 text-md text-gray-700 w-full resize-none rounded-md"
+        style={{ backgroundColor: "transparent" }}
+      >
         {detailPost.content}
-      </div>
+      </textarea>
       <div className="flex justify-end gap-2 mb-4">
         <button
           onClick={() => router.push(`/post/${detailPost.id}/update`)}
