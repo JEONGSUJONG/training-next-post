@@ -20,7 +20,7 @@ export default function ReplyItem({ reply }: { reply: Reply }) {
   };
 
   return (
-    <div className="w-full">
+    <div>
       <div className="flex justify-between items-center border p-2 my-2 rounded border-black">
         <div className="flex">
           <p className="font-bold pr-2">{reply.id}</p>

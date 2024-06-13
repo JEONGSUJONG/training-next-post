@@ -47,7 +47,7 @@ export default function PostList({ posts }: PostProps) {
             </div>
           </Link>
         ))}
-      <div className="flex justify-end p-2 mb-10">
+      <div className="flex justify-end mb-10">
         <Link
           href="/post/create"
           className="border bg-black text-white p-2 rounded-md"

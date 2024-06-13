@@ -33,7 +33,7 @@ export default function ReplyInput({ postId }: { postId: string }) {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="my-2 border bg-black text-white p-2 rounded-md mr-4"
+            className="my-2 border bg-black text-white p-2 rounded-md "
           >
             작성
           </button>

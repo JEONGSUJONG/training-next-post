@@ -2,8 +2,6 @@
 
 import { deletePost } from "@/app/service/post.service";
 import { useRouter } from "next/navigation";
-import ReplyList from "../Reply/ReplyItem";
-import ReplyInput from "../Reply/ReplyInput";
 
 type Post = {
   id: number;
@@ -36,14 +34,14 @@ export default function PostDetail({ detailPost }: PostDetailProps) {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div>
       <h1 className="text-4xl font-bold mb-4">{detailPost.title}</h1>
       <p className="text-sm text-gray-500">
         작성일: {new Date(detailPost.createdAt).toLocaleDateString()}
       </p>
-      <hr className="my-8 border-black" />
-      <p className="text-lg text-gray-700 mb-2">{detailPost.content}</p>
-      <hr className="my-8 border-black" />
+      <div className="border-t border-b h-[200px] border-black my-2 py-2 text-md text-gray-700">
+        {detailPost.content}
+      </div>
       <div className="flex justify-end gap-2 mb-4">
         <button
           onClick={() => router.push(`/post/${detailPost.id}/update`)}
