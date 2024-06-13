@@ -4,8 +4,13 @@ import { revalidatePath } from "next/cache";
 
 // 모든 게시판 읽기
 export async function getAllPosts() {
-  const postList = prisma.post.findMany({
+  const postList = await prisma.post.findMany({
     orderBy: { id: "desc" },
+    include: {
+      _count: {
+        select: { reply: true },
+      },
+    },
   });
   return postList;
 }
