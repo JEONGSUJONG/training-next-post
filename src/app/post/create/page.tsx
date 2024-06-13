@@ -1,9 +1,9 @@
-import PostCreate from "@/app/components/PostCreate";
+import PostCreateUpdate from "@/app/components/PostCreateUpdate";
 
 export default function CreatePage() {
   return (
     <>
-      <PostCreate />
+      <PostCreateUpdate />
     </>
   );
 }

@@ -12,24 +12,33 @@ export default function ReplyInput({ postId }: { postId: string }) {
       return null;
     }
     const result = await createReply(postId, replyContent);
-
     if (!result) {
-      alert("댓글을 작성 FAILED");
+      alert("댓글 작성에 실패했습니다.");
       return false;
     }
-    formRef?.current?.reset();
+
+    formRef.current?.reset();
     return true;
   };
 
   return (
-    <form ref={formRef} className="" action={handleSubmit}>
-      <input
-        type="text"
-        name="replyContent"
-        className=""
-        placeholder="댓글을 입력하세요."
-      />
-      <button className="">생성</button>
-    </form>
+    <div>
+      <form ref={formRef} action={handleSubmit}>
+        <input
+          type="text"
+          name="replyContent"
+          className="w-full border p-2 rounded-md"
+          placeholder="댓글을 입력하세요."
+        />
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="my-2 border bg-black text-white p-2 rounded-md"
+          >
+            작성
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

@@ -32,14 +32,17 @@ export async function getPostById(postId: number) {
 }
 
 // 게시판 생성
-export async function createPost(formData: FormData) {
-  const title = formData.get("title") as string;
-  const content = formData.get("content") as string;
-
+export async function createPost({
+  title,
+  content,
+}: {
+  title: string;
+  content: string;
+}) {
   const newPost = await prisma.post.create({
     data: {
-      title: title,
-      content: content,
+      title,
+      content,
     },
   });
   if (!newPost) {
@@ -83,14 +86,14 @@ export async function deletePost(postId: number) {
 // 게시판 수정
 export async function updatePost(
   postId: number,
-  newData: { title: string; content: string }
+  formData: { title: string; content: string }
 ) {
   try {
     const result = await prisma.post.update({
       where: {
         id: postId,
       },
-      data: newData,
+      data: formData,
     });
 
     if (!result) {

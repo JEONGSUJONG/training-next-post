@@ -1,7 +1,7 @@
 "use server";
 import prisma from "@/prisma/prisma";
 
-export async function getReplysByPostId(postId: string): Promise<any[]> {
+export async function getReplysByPostId(postId: string) {
   try {
     const replies = await prisma.reply.findMany({
       where: {
@@ -11,7 +11,6 @@ export async function getReplysByPostId(postId: string): Promise<any[]> {
         createdAt: "asc",
       },
     });
-
     return replies;
   } catch (error) {
     console.error("댓글을 가져오는 중 에러가 발생했습니다:", error);

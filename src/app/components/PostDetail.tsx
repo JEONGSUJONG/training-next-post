@@ -1,10 +1,9 @@
 "use client";
 
 import { deletePost } from "@/app/service/post.service";
-import { createReply } from "@/app/service/reply.service";
 import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
-import ReplyList from "./ReplyList";
+import ReplyList from "./ReplyItem";
+import ReplyInput from "./ReplyInput";
 
 type Post = {
   id: number;
@@ -19,8 +18,6 @@ type PostDetailProps = {
 
 export default function PostDetail({ detailPost }: PostDetailProps) {
   const router = useRouter();
-  const [replyContent, setReplyContent] = useState("");
-  const formRef = useRef<HTMLFormElement>(null);
 
   if (!detailPost) {
     return <div>포스트를 찾을 수 없습니다.</div>;
@@ -36,13 +33,6 @@ export default function PostDetail({ detailPost }: PostDetailProps) {
     alert("삭제 완료");
     window.location.href = "/post";
     return true;
-  };
-
-  const handleReplySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await createReply(detailPost.id.toString(), replyContent);
-    setReplyContent("");
-    formRef?.current?.reset();
   };
 
   return (
@@ -68,21 +58,6 @@ export default function PostDetail({ detailPost }: PostDetailProps) {
           삭제
         </button>
       </div>
-      <div>
-        <form ref={formRef} onSubmit={handleReplySubmit}>
-          <textarea
-            className="w-full h-[80px] p-4"
-            value={replyContent}
-            onChange={(e) => setReplyContent(e.target.value)}
-          />
-          <div className="flex justify-end">
-            <button className="my-2 border bg-black text-white p-2 rounded-md">
-              작성
-            </button>
-          </div>
-        </form>
-      </div>
-      <div></div>
     </div>
   );
 }
