@@ -2,8 +2,8 @@
 
 import { deletePost } from "@/app/service/post.service";
 import { useRouter } from "next/navigation";
-import ReplyList from "./ReplyItem";
-import ReplyInput from "./ReplyInput";
+import ReplyList from "../Reply/ReplyItem";
+import ReplyInput from "../Reply/ReplyInput";
 
 type Post = {
   id: number;

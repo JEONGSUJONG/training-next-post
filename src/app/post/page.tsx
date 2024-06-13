@@ -1,4 +1,4 @@
-import PostList from "../components/PostList";
+import PostList from "../components/Post/PostList";
 import { getAllPosts } from "../service/post.service";
 
 export default async function PostPage() {

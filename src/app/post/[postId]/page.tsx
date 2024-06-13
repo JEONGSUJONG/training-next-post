@@ -1,5 +1,6 @@
-import PostDetail from "@/app/components/PostDetail";
-import ReplyInput from "@/app/components/ReplyInput";
+import PostDetail from "@/app/components/Post/PostDetail";
+import ReplyInput from "@/app/components/Reply/ReplyInput";
+import ReplyItem from "@/app/components/Reply/ReplyItem";
 import { getPostById } from "@/app/service/post.service";
 import { getReplysByPostId } from "@/app/service/reply.service";
 
@@ -19,6 +20,9 @@ export default async function DetailPosts({ params }: DetailPostProps) {
     <div className="my-8">
       <PostDetail detailPost={detailPost} />
       <ReplyInput postId={postId.toString()} />
+      {replyList.map((reply) => (
+        <ReplyItem key={reply.id} reply={reply} />
+      ))}
     </div>
   );
 }

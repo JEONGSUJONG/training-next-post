@@ -1,4 +1,4 @@
-import PostCreateUpdate from "@/app/components/PostCreateUpdate";
+import PostCreateUpdate from "@/app/components/Post/PostCreateUpdate";
 
 type UpdatePostPageProps = {
   params: {

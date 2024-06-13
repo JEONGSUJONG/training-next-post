@@ -12,23 +12,22 @@ export async function getAllPosts() {
 
 // 특정 게시물 가져오기
 export async function getPostById(postId: number) {
-  try {
-    const post = await prisma.post.findUnique({
-      where: {
-        id: postId,
-      },
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        createdAt: true,
-      },
-    });
-    return post;
-  } catch (error) {
-    console.error("게시물을 가져오는 데 실패했습니다:", error);
+  const result = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      createdAt: true,
+    },
+  });
+  if (!result) {
     return null;
   }
+  revalidatePath("/");
+  return result;
 }
 
 // 게시판 생성
@@ -48,39 +47,34 @@ export async function createPost({
   if (!newPost) {
     return null;
   }
-  revalidatePath("/post");
+  revalidatePath("/");
   return newPost;
 }
 
 // 게시판 삭제
 export async function deletePost(postId: number) {
-  try {
-    const post = await prisma.post.findUnique({
-      where: {
-        id: postId,
-      },
-      include: {
-        reply: true,
-      },
-    });
-    if (!post) {
-      return null;
-    }
-    await prisma.reply.deleteMany({
-      where: {
-        postId,
-      },
-    });
-    await prisma.post.delete({
-      where: {
-        id: postId,
-      },
-    });
-    return true;
-  } catch (error) {
-    console.error("Error deleting post:", error);
-    return false;
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    include: {
+      reply: true,
+    },
+  });
+  if (!post) {
+    return null;
   }
+  await prisma.reply.deleteMany({
+    where: {
+      postId,
+    },
+  });
+  await prisma.post.delete({
+    where: {
+      id: postId,
+    },
+  });
+  return true;
 }
 
 // 게시판 수정
@@ -88,19 +82,15 @@ export async function updatePost(
   postId: number,
   formData: { title: string; content: string }
 ) {
-  try {
-    const result = await prisma.post.update({
-      where: {
-        id: postId,
-      },
-      data: formData,
-    });
+  const result = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: formData,
+  });
 
-    if (!result) {
-      return null;
-    }
-    return true;
-  } catch (error) {
-    return false;
+  if (!result) {
+    return null;
   }
+  return true;
 }
